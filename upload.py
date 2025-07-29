@@ -13,5 +13,3 @@ s3 = boto3.client('s3')
 
 # Upload the file
 s3.upload_file('chart.png', 'tester-1-bucket123', 'chart')
-
-print(aws_access_key_id, aws_secret_access_key)
