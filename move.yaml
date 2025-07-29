@@ -1,0 +1,29 @@
+resources:
+- name: concourse-examples
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/zak-02/s3
+
+jobs:
+- name: s3-job
+  plan:
+  - get: concourse-examples
+  - task: s3-task
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: python
+      inputs: # pass concourse-examples into this task step
+      - name: concourse-examples
+      run:
+        path: sh
+        args:
+        - -cx
+        # this is just a bash script
+        - |
+          cd concourse-examples
+          pip install boto3
+          python upload.py
