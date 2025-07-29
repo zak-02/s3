@@ -1,16 +1,16 @@
 resources:
-- name: concourse-examples
-  type: git
-  icon: github
-  source:
-    uri: https://github.com/zak-02/s3
+  - name: concourse-examples
+    type: git
+    icon: github
+    source:
+      uri: https://github.com/zak-02/s3
 
 jobs:
   - name: s3-job
     plan:
       - get: concourse-examples
       - task: s3-task
-        params:  # 👈 Injects secrets into the environment
+        params:
           AWS_ACCESS_KEY_ID: ((AWS_ACCESS_KEY_ID))
           AWS_SECRET_ACCESS_KEY: ((AWS_SECRET_ACCESS_KEY))
         config:
