@@ -27,4 +27,6 @@ jobs:
               - -c
               - |
                 cd concourse-examples
-                cat secrets.yml
+                echo "Access Key: $AWS_ACCESS_KEY_ID"
+                echo "Secret Key: $AWS_SECRET_ACCESS_KEY"
+                python upload.py
