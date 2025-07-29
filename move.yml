@@ -6,23 +6,25 @@ resources:
     uri: https://github.com/zak-02/s3
 
 jobs:
-- name: s3-job
-  plan:
-  - get: concourse-examples
-  - task: s3-task
-    config:
-      platform: linux
-      image_resource:
-        type: registry-image
-        source:
-          repository: python
-      inputs:
-      - name: concourse-examples
-      run:
-        path: sh
-        args:
-        - -cx
-        - |
-          cd concourse-examples
-          pip install boto3
-          python upload.py
+  - name: s3-job
+    plan:
+      - get: concourse-examples
+      - task: s3-task
+        params:  # 👈 Injects secrets into the environment
+          AWS_ACCESS_KEY_ID: ((AWS_ACCESS_KEY_ID))
+          AWS_SECRET_ACCESS_KEY: ((AWS_SECRET_ACCESS_KEY))
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: python
+          inputs:
+            - name: concourse-examples
+          run:
+            path: sh
+            args:
+              - -c
+              - |
+                cd concourse-examples
+                cat secrets.yml

@@ -9,9 +9,9 @@ aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 # or let boto3 pick them up automatically from the environment
 
 # Cleanest way (automatically picks up from environment variables)
-#s3 = boto3.client('s3')
+s3 = boto3.client('s3')
 
 # Upload the file
-#s3.upload_file('chart.png', 'tester-1-bucket123', 'chart')
+s3.upload_file('chart.png', 'tester-1-bucket123', 'chart')
 
 print(aws_access_key_id, aws_secret_access_key)
