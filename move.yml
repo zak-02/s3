@@ -5,11 +5,18 @@ resources:
     source:
       uri: https://github.com/zak-02/s3
 
+  - name: produce-chart
+    type: git
+    icon: github
+    source:
+      uri: https://github.com/zak-02/submodule.git
+
 jobs:
-  - name: s3-job
+  - name: chart-and-upload
     plan:
+      - get: produce-chart
       - get: concourse-examples
-      - task: s3-task
+      - task: build-and-upload
         params:
           AWS_ACCESS_KEY_ID: ((AWS_ACCESS_KEY_ID))
           AWS_SECRET_ACCESS_KEY: ((AWS_SECRET_ACCESS_KEY))
@@ -20,12 +27,16 @@ jobs:
             source:
               repository: python
           inputs:
+            - name: produce-chart
             - name: concourse-examples
           run:
             path: sh
             args:
               - -c
               - |
-                cd concourse-examples
-                pip install boto3
+                cd produce-chart
+                pip install pandas matplotlib boto3
+                python netflix.py
+                cp chart.png ../concourse-examples/
+                cd ../concourse-examples
                 python upload.py
