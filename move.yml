@@ -40,3 +40,4 @@ jobs:
                 cp chart.png ../concourse-examples/
                 cd ../concourse-examples
                 python upload.py
+                
