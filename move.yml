@@ -3,11 +3,11 @@ resources:
     type: git
     icon: github
     source:
-      uri: https://github.com/zak-02/s3
+      uri: https://github.com/zak-02/s3.git
 
   - name: produce-chart
     type: git
-    icon: github
+    icon: githubccc
     source:
       uri: https://github.com/zak-02/submodule.git
 
@@ -40,4 +40,3 @@ jobs:
                 cp chart.png ../concourse-examples/
                 cd ../concourse-examples
                 python upload.py
-                
